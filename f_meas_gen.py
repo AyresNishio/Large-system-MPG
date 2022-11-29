@@ -4,44 +4,9 @@ from random import sample
 
 from f_observability import *
 
-def build_measurement_plan(Power_Sys,max_redun,semente = 5):
 
-        seed(semente)
+#def build_measurement_plan(Power_Sys,max_redun,semente = 5):
 
-        Ybus = Power_Sys.Ybus
-        max_meas = Power_Sys.max_meas
-        n_bus = Power_Sys.n_bus
-
-        meas_plan = build_empty_measurement_plan(Ybus,max_meas)
-
-        n_meas = 0
-        observable = False
-        redundancy = 0
-
-        possible_meas = [i for i in range(1,max_meas+1)]
-
-        #Alcança Redundância minima
-        while( redundancy < max_redun):
-
-            n_meas += add_random_measurement(meas_plan,possible_meas)
-            redundancy =  calculate_redundancy(n_meas,n_bus,max_meas)
-
-        H = build_jacobian_matrix(Ybus,meas_plan)
-        G = build_gain_matrix(H)
-        observable = test_observability(G,1.E-10)
-        
-        #Alcança observabilidade
-        while( not observable):
-            n_meas += add_random_measurement(meas_plan,possible_meas)
-            redundancy =  calculate_redundancy(n_meas,n_bus,max_meas)
-
-            H = build_jacobian_matrix(Ybus,meas_plan)
-            G = build_gain_matrix(H)
-            observable = test_observability(G,1.E-10)
-
-        meas_plan = remove_desactivated_measurements(meas_plan)
-
-        return meas_plan
 
 def build_empty_measurement_plan(Ybus, max_med):
     meas_plan = np.zeros([max_med,7],np.int32)
