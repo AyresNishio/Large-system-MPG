@@ -36,4 +36,8 @@ Insere matriz de adjascências da rede Polonesa, os dados gerais desse caso são
    permission of, Roman Korab <roman.korab@polsl.pl>.
    referencia: https://matpower.org/docs/ref/matpower5.0/case2383wp.html
 
+## 06/12/2022: Primeiro Commit. 
 
+Gerado um plano de medição para o sistema Polones
+
+O plano contém 7148 medidas demorou 81 min e 38 seg para ser criado. Ao fim do processo um alerta da biblioteca lin alg apareceu, provavelmente o sistema encontra-se perto da falta de observabilidade. 
