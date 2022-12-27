@@ -5,8 +5,21 @@ from random import sample
 from f_observability import *
 
 
-#def build_measurement_plan(Power_Sys,max_redun,semente = 5):
+class Bus_system:
+    def __init__(self, Ybus):
+        self.Ybus=Ybus
+        self.n_bus =  np.size(Ybus,1)
+        self.n_branches = count_branches(Ybus)
+        self.max_meas = self.n_branches*2 + self.n_bus
 
+def count_branches(Ybus):
+    n_branches = 0
+    
+    for line in Ybus:
+        for i in line:
+            n_branches += i
+    n_branches = int(n_branches/2)
+    return n_branches
 
 def build_empty_measurement_plan(Ybus, max_med):
     meas_plan = np.zeros([max_med,7],np.int32)
@@ -71,3 +84,31 @@ def remove_desactivated_measurements(meas_plan): #arquivo apenas com as medidas 
     for i in range(meas_plan.shape[0]):
         meas_plan[i,0] = i + 1
     return meas_plan
+
+def get_terminal_bus(adj_matrix):
+    (lines, _) = adj_matrix.shape
+    terminal_buses = []
+    for line in range(lines):
+        if (adj_matrix[line,:] == 1).sum(axis=0) == 1:
+            terminal_buses.append(line)
+    
+    return terminal_buses
+
+def get_initial_meas_plan(meas_plan, terminal_buses):
+    for bus in terminal_buses:
+        for line in range(meas_plan.shape[0]):
+            if (meas_plan[line,1] == bus+1):
+                meas_plan[line,6] = 1
+
+    return meas_plan
+
+if __name__ == '__main__':
+    Ybus_File = "Rede_2224bus_GB.txt"
+    Ybus = np.loadtxt(Ybus_File, dtype='i', delimiter=',')
+    terminal_buses = get_terminal_bus(Ybus)
+
+    power_system = Bus_system(Ybus)
+
+    empty_plan = build_empty_measurement_plan(Ybus, power_system.max_meas)
+    pre_processed_meas = get_initial_meas_plan(empty_plan, terminal_buses)
+    print("Acabou")
