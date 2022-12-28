@@ -85,12 +85,12 @@ def remove_desactivated_measurements(meas_plan): #arquivo apenas com as medidas 
         meas_plan[i,0] = i + 1
     return meas_plan
 
-def get_terminal_bus(adj_matrix):
-    (lines, _) = adj_matrix.shape
+def get_terminal_bus(Ybus):
+    (n_bus, _) = Ybus.shape
     terminal_buses = []
-    for line in range(lines):
-        if (adj_matrix[line,:] == 1).sum(axis=0) == 1:
-            terminal_buses.append(line)
+    for bus in range(n_bus):
+        if (Ybus[bus,:] == 1).sum(axis=0) == 1:
+            terminal_buses.append(bus+1)
     
     return terminal_buses
 
@@ -102,13 +102,28 @@ def get_initial_meas_plan(meas_plan, terminal_buses):
 
     return meas_plan
 
+def get_most_relevant_buses(Ybus):
+    n_neighbors = []
+    i = 1
+    for bus in Ybus:
+        n_neighbors.append((i,sum(bus)))
+        i= i + 1
+    
+    n_neighbors.sort(key=lambda x: x[-1], reverse = True) 
+    relevant_buses = [i[0] for i in n_neighbors] 
+    n_relevants = int(len(Ybus)/4)
+
+    return(relevant_buses[0:n_relevants])
+
 if __name__ == '__main__':
-    Ybus_File = "Rede_2224bus_GB.txt"
+    Ybus_File = "Rede_Polonia.txt"
     Ybus = np.loadtxt(Ybus_File, dtype='i', delimiter=',')
-    terminal_buses = get_terminal_bus(Ybus)
 
-    power_system = Bus_system(Ybus)
+    get_most_relevant_buses(Ybus)
+    # terminal_buses = get_terminal_bus(Ybus)
 
-    empty_plan = build_empty_measurement_plan(Ybus, power_system.max_meas)
-    pre_processed_meas = get_initial_meas_plan(empty_plan, terminal_buses)
+    # power_system = Bus_system(Ybus)
+
+    # empty_plan = build_empty_measurement_plan(Ybus, power_system.max_meas)
+    # pre_processed_meas = get_initial_meas_plan(empty_plan, terminal_buses)
     print("Acabou")

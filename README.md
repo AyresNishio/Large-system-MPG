@@ -20,7 +20,7 @@ Gerado um plano de medição onde medidas foram distribuidas aleatóriamente pel
 O plano contendo 6784 medidas demorou 34 min e 44 seg para ser criado. Teste de observabilidade é a etapa mais onerosa do processo. 
 
 ## 06/12/2022: Segundo Commit. 
-Insere matriz de adjascências da rede Polonesa, os dados gerais desse caso são:
+Insere matriz de adjascências da rede Polonesa com 2383 barras, os dados gerais desse caso são:
   CASE2383WP  Power flow data for Polish system - winter 1999-2000 peak.
    Please see CASEFORMAT for details on the case file format.
 
@@ -36,8 +36,18 @@ Insere matriz de adjascências da rede Polonesa, os dados gerais desse caso são
    permission of, Roman Korab <roman.korab@polsl.pl>.
    referencia: https://matpower.org/docs/ref/matpower5.0/case2383wp.html
 
-## 06/12/2022: Primeiro Commit. 
+## 06/12/2022: Terceiro Commit. 
 
 Gerado um plano de medição para o sistema Polones
 
 O plano contém 7148 medidas demorou 81 min e 38 seg para ser criado. Ao fim do processo um alerta da biblioteca lin alg apareceu, provavelmente o sistema encontra-se perto da falta de observabilidade. 
+
+## 08/12/2022: Quarto Commit. 
+
+Gerado um plano de medição otimizado para o sistema Polones
+
+O plano contém 5673 medidas. Barras terminaais possuem UMs e restos das medidas foram sorteadas até observabilidade ser alcançada 
+
+## 27/12/2022: Commit plano de medição incial ótimo
+
+Gerado um plano de medição contendo 5846 medidas com 60% de redundância. Utilizando o programa do matlab Top_otimin aloc foi criado um plano inicial ótimo que garante a topologia mímima que garante a observabilidade topológica do sistema. Em sequencia, são adicionadas foram adicionadas medidas até a rede se tornar observável com mais de .6 de redundância
