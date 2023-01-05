@@ -62,3 +62,4 @@ def test_observability(G,tol):
 
 def calculate_redundancy(m, nb,max_meas):
     return (m-(nb-1))/(max_meas-(nb-1))
+

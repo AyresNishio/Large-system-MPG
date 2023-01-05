@@ -51,3 +51,9 @@ O plano contém 5673 medidas. Barras terminaais possuem UMs e restos das medidas
 ## 27/12/2022: Commit plano de medição incial ótimo
 
 Gerado um plano de medição contendo 5846 medidas com 60% de redundância. Utilizando o programa do matlab Top_otimin aloc foi criado um plano inicial ótimo que garante a topologia mímima que garante a observabilidade topológica do sistema. Em sequencia, são adicionadas foram adicionadas medidas até a rede se tornar observável com mais de .6 de redundância
+
+## 04/01/2023: Analise de Criticalidades plano de medição Polones
+
+Construida a matriz de covariância do sistema polones de 5846 medidas, esta matriz mostrou-se pesada para leitura ocupando aproximadamente 800mb.
+Realizada analise de Criticalidades via GPU do plano de medição do sistema polones  até k=3. Foram encontradas 12 C1s, 173 C2s e 560 C3s em aproximadamente meia hora. 
+Será necessário avaliar 1000 vezes mais combinações para avaliar este plano de medição até k=4. Atravez da extrapolação do tempo requisitado para k=3, pode-se concluir que serão necessários aproximadamente 12 dias para realizar a análise até k=4.
